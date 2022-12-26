@@ -593,7 +593,10 @@ static struct ion_handle *__ion_alloc(
 		trace_ion_alloc_buffer_start(client->name, heap->name, len,
 				heap_id_mask, flags, client->pid, current->comm,
 					current->pid, (void *)buffer);
+		tracing_mark_begin("%s(%s, %zu, 0x%x, 0x%x)", "ion_alloc",
+				   heap->name, len, heap_id_mask, flags);
 		buffer = ion_buffer_create(heap, dev, len, align, flags);
+		tracing_mark_end();
 		trace_ion_alloc_buffer_end(client->name, heap->name, len,
 				heap_id_mask, flags, client->pid, current->comm,
 					current->pid, (void *)buffer);
@@ -1961,6 +1964,20 @@ static const struct file_operations debug_heap_fops = {
 	.llseek = seq_lseek,
 	.release = single_release,
 };
+
+void show_ion_system_heap_pool_size(struct ion_device *dev, struct seq_file *s)
+{
+	if (!down_read_trylock(&dev->lock)) {
+		if (s)
+			seq_printf(s, "SystemHeapPool: NA\n");
+		else
+			pr_cont("SystemHeapPool:NA ");
+		return;
+	}
+
+	show_ion_system_heap_pool_size_locked(s);
+	up_read(&dev->lock);
+}
 
 void show_ion_usage(struct ion_device *dev)
 {
