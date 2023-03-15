@@ -68,4 +68,7 @@ obj-$(CONFIG_TYPEC)		+= typec/
 
 obj-$(CONFIG_USB_ROLE_SWITCH)	+= roles/
 
+#Bug 558309, lizerong.wt, 20200522, add, add usb_notify node
+obj-$(CONFIG_USB_NOTIFIER)  += notify/
+
 obj-$(CONFIG_USB_PD)		+= pd/

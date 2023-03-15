@@ -110,6 +110,9 @@ source "drivers/usb/image/Kconfig"
 
 source "drivers/usb/usbip/Kconfig"
 
+#bug433318, zhaobeilong@wt, 20180409, add usb disable node
+source "drivers/usb/notify/Kconfig"
+
 endif
 
 source "drivers/usb/mtu3/Kconfig"
@@ -123,6 +126,9 @@ source "drivers/usb/dwc2/Kconfig"
 source "drivers/usb/chipidea/Kconfig"
 
 source "drivers/usb/isp1760/Kconfig"
+
+#Bug 558309, lizerong.wt, 20200522, add, add usb_notify node
+source "drivers/usb/notify/Kconfig"
 
 comment "USB port drivers"
 
