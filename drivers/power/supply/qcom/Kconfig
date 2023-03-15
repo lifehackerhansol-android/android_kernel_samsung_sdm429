@@ -175,4 +175,17 @@ config SMB1398_CHARGER
 	      wireless charger receiver and provide the input for downstream
 	      chargers.
 
+config DISABLE_TEMP_PROTECT
+	bool "control of TEMP protect"
+	default n
+	help
+	  Say Y here to enable a function which disabled TEMP protect...
+	  WARNNING:Only SCM could open it.
+
+config BATT_CISD
+	 bool "support for cisd"
+	 help
+	 Say Y to include support for cisd
+	 cisd means cell internal short detection
+
 endmenu
