@@ -193,6 +193,9 @@ obj-$(CONFIG_UNISYS_VISORBUS)	+= visorbus/
 obj-$(CONFIG_SIOX)		+= siox/
 obj-$(CONFIG_GNSS)		+= gnss/
 obj-$(CONFIG_SENSORS_SSC)	+= sensors/
+
+#chk72707, xieshuaishuai, ADD, 20201208, add bootloader log feature to project.
+obj-y                           += wt_system_monitor/
 # CONFIG_SEC_DEBUG
 obj-y				+= debug/
 # CONFIG_SS_VIBRATOR
