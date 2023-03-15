@@ -80,3 +80,4 @@ obj-y                           += qrc/
 obj-$(CONFIG_KINECTICS_XR_NORDIC) += kxrctrl/
 
 obj-y += hardware_info.o
+obj-$(CONFIG_DRV_SAMSUNG)       += samsung/
