@@ -237,4 +237,6 @@ source "drivers/energy_model/Kconfig"
 
 source "drivers/debug/Kconfig"
 
+source "drivers/motor/Kconfig"
+
 endmenu
