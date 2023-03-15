@@ -1,4 +1,7 @@
-#include "sdm439-camera-sensor-mtp.dtsi"
+//#include "sdm439-camera-sensor-mtp.dtsi"
+//++bug 601075, huangguoyong.wt, modify,2020/11/17,modify for p81081 bringup camera
+#include "sdm439-camera-sensor-mtp-p81081.dtsi"
+#include <dt-bindings/input/input.h>
 
 &blsp1_uart2 {
 	status = "ok";
@@ -43,6 +46,31 @@
 	};
 };
 
+//+bug601075,sheqihao.wt, modify, 2020.11.13, N8-R Project tp Bringup
+&i2c_3 {
+        status = "okay";
+        focaltech@38 {
+                compatible = "focal,ft3528", "focal,ft3617", "focal,ft8201", "focal,ft3617003","focaltech,fts";
+                reg = <0x38>;
+                interrupt-parent = <&tlmm>;
+                interrupts = <65 0x2002>;
+                vdd-supply = <&pm8953_l10>;
+                vcc_i2c-supply = <&pm8953_l5>;
+                pinctrl-names = "pmx_ts_active","pmx_ts_suspend","pmx_ts_release";
+                pinctrl-0 = <&ts_int_active &ts_reset_active>;
+                pinctrl-1 = <&ts_int_suspend &ts_reset_suspend>;
+                pinctrl-2 = <&ts_release>;
+                focaltech,reset-gpio = <&tlmm 64 0x00>;
+                focaltech,irq-gpio = <&tlmm 65 0x2002>;
+                focaltech,display-coords = <0 0 800 1280>;
+                focaltech,max-touch-number = <10>;
+                touchpanel,rst-gpio = <&tlmm 64 0x0>;
+                touchpanel,irq-gpio = <&tlmm 65 0x0>;
+                touchpanel,codes = <0 0 0 0 KEY_HOMEPAGE 0 0 0 0 0 0 0 0 0 0>;
+	};
+};
+//-bug601075,sheqihao.wt, modify, 2020.11.13, N8-R Project tp Bringup
+
 &sdhc_1 {
 	/* device core power supply */
 	vdd-supply = <&pm8953_l8>;
@@ -83,7 +111,7 @@
 	pinctrl-0 = <&sdc2_clk_on &sdc2_cmd_on &sdc2_data_on &sdc2_cd_on>;
 	pinctrl-1 = <&sdc2_clk_off &sdc2_cmd_off &sdc2_data_off>;
 
-	cd-gpios = <&tlmm 67 0x1>;
+	cd-gpios = <&tlmm 67 0x0>;
 
 	qcom,clk-rates = <400000 20000000 25000000 50000000 100000000
 								200000000>;
@@ -99,6 +127,8 @@
 		pinctrl-names = "default";
 		pinctrl-0 = <&gpio_key_active>;
 
+		/*+bug601075, huangzheng1.wt, modify,2020/11/20,modify for p81081 bringup camera*/
+		/*
 		camera_focus {
 			label = "camera_focus";
 			gpios = <&tlmm 128 0x1>;
@@ -108,6 +138,8 @@
 			linux,can-disable;
 			gpio-key,wakeup;
 		};
+		*/
+		/*-bug601075, huangzheng1.wt, modify,2020/11/20,modify for p81081 bringup camera*/
 
 		camera_snapshot {
 			label = "camera_snapshot";
@@ -156,23 +188,27 @@
 	hw-config = "single_dsi";
 };
 
+//+bug601075,sheqihao.wt, modify, 2020.11.13, N8-R Project Display Bringup
 &mdss_dsi0 {
-	qcom,dsi-pref-prim-pan = <&dsi_hx8399c_truly_vid>;
+	qcom,dsi-pref-prim-pan = <&dsi_sim_vid>;
 	pinctrl-names = "mdss_default", "mdss_sleep";
 	pinctrl-0 = <&mdss_dsi_active &mdss_te_active &bklt_en_default>;
 	pinctrl-1 = <&mdss_dsi_suspend &mdss_te_suspend>;
 
-	qcom,platform-bklight-en-gpio = <&pm8953_gpios 4 0>;
-	qcom,platform-te-gpio = <&tlmm 24 0>;
+	//qcom,platform-bklight-en-gpio = <&pm8953_gpios 4 0>;
+	//qcom,platform-te-gpio = <&tlmm 24 0>;
 	qcom,platform-reset-gpio = <&tlmm 60 0>;
 	lab-supply = <&lcdb_ldo_vreg>;
 	ibb-supply = <&lcdb_ncp_vreg>;
 };
+//-bug601075,sheqihao.wt, modify, 2020.11.13, N8-R Project Display Bringup
 
 &mdss_dsi1 {
 	status = "disabled";
 };
 
+//+ Removed by WT
+/*
 &dsi_hx8399c_truly_vid {
 	/delete-property/ qcom,mdss-dsi-panel-timings;
 	qcom,mdss-dsi-panel-timings-phy-12nm = [18 0a 10 06 03 08 06 0e];
@@ -559,6 +595,8 @@
 	qcom,mdss-dsi-pwm-gpio = <&pm8953_gpios 8 0>;
 	qcom,panel-supply-entries = <&dsi_panel_pwr_supply>;
 };
+//-Removed by WT
+*/
 
 &i2c_2 {
 #address-cells = <1>;
