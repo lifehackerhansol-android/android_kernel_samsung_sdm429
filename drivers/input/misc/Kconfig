@@ -884,5 +884,13 @@ config INPUT_SC27XX_VIBRA
 
 	  To compile this driver as a module, choose M here. The module will
 	  be called sc27xx_vibra.
-
+#+bug601075 ,  xuyanan.wt,20201119,add  bringup sar sensor
+config INPUT_ABOV
+	tristate "ABOV_SAR_sensor"
+	depends on I2C
+	default n
+	help
+	  Say Y to enable the SAR detection application, if N here not to use the
+	  this SAR sensor
+#-bug601075 ,  xuyanan.wt,20201119,add  bringup sar sensor
 endif
