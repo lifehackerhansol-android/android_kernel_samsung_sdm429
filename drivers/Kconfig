@@ -239,4 +239,6 @@ source "drivers/debug/Kconfig"
 
 source "drivers/motor/Kconfig"
 
+source "drivers/switch/Kconfig"
+
 endmenu

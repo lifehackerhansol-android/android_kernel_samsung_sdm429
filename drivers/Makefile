@@ -197,3 +197,5 @@ obj-$(CONFIG_SENSORS_SSC)	+= sensors/
 obj-y				+= debug/
 # CONFIG_SS_VIBRATOR
 obj-y				+= motor/
+
+obj-$(CONFIG_SWITCH)		+= switch/
