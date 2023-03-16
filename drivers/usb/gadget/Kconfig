@@ -681,7 +681,7 @@ config USB_CONN_GADGET_NDOP
 source "drivers/usb/gadget/legacy/Kconfig"
 
 config USB_DUN_SUPPORT
-	boolean "DUN support function"
+	bool "DUN support function"
         depends on USB_F_ACM
 	help
 	  Provides USB modem serial driver.
