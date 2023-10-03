@@ -565,6 +565,17 @@ KBUILD_CFLAGS += $(call cc-disable-warning, unused-but-set-variable)
 KBUILD_CFLAGS += $(call cc-disable-warning, unused-const-variable)
 endif
 
+#chk72655, xieshuaishuai.wt, ADD, 20201126, add factory version & MP version macro control
+ifeq ($(WT_FINAL_RELEASE_KERNEL),yes)
+KBUILD_CFLAGS += -DWT_FINAL_RELEASE
+endif
+ifeq ($(WT_COMPILE_FACTORY_VERSION_KERNEL),yes)
+KBUILD_CFLAGS += -DWT_COMPILE_FACTORY_VERSION
+endif
+#chk72534, xieshuaishuai.wt, ADD, 20201127, ATO bainry macro after mass production.
+ifeq ($(WT_COMPILE_FACTORY_VERSION_MP),yes)
+KBUILD_CFLAGS += -DWT_COMPILE_FACTORY_VERSION_MP
+endif
 
 ifeq ($(mixed-targets),1)
 # ===========================================================================
@@ -1329,7 +1340,7 @@ headers_install: __headers
 	  $(error Headers not exportable for the $(SRCARCH) architecture))
 	$(Q)$(MAKE) $(hdr-inst)=include/uapi
 	$(Q)$(MAKE) $(hdr-inst)=arch/$(hdr-arch)/include/uapi $(hdr-dst)
-	$(Q)$(MAKE) $(hdr-inst)=techpack/audio/include/uapi dst=techpack/audio/include
+	$(Q)$(MAKE) $(hdr-inst)=techpack
 
 PHONY += headers_check_all
 headers_check_all: headers_install_all
@@ -1339,7 +1350,7 @@ PHONY += headers_check
 headers_check: headers_install
 	$(Q)$(MAKE) $(hdr-inst)=include/uapi HDRCHECK=1
 	$(Q)$(MAKE) $(hdr-inst)=arch/$(hdr-arch)/include/uapi $(hdr-dst) HDRCHECK=1
-	$(Q)$(MAKE) $(hdr-inst)=techpack/audio/include/uapi dst=techpack/audio/include HDRCHECK=1
+	$(Q)$(MAKE) $(hdr-inst)=techpack HDRCHECK=1
 
 # ---------------------------------------------------------------------------
 # Kernel selftest
